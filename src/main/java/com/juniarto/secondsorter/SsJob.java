@@ -116,7 +116,7 @@ public class SsJob extends Configured implements Tool{
         //p.waitFor();
         ZMQ.Context context = ZMQ.context(1);
         ZMQ.Socket requester = context.socket(ZMQ.REQ);
-        requester.connect("tcp://localhost:5555");
+        requester.connect("tcp://localhost:5557");
         
         String attemptID = taskAttemptID.toString();
         requester.send(attemptID.getBytes(),0);
@@ -152,6 +152,7 @@ public class SsJob extends Configured implements Tool{
        
        job.setMapperClass(SsMapper.class);
        job.setReducerClass(SsReducer.class);
+       job.setNumReduceTasks(2);
        
        String[] args = new GenericOptionsParser(getConf(), allArgs).getRemainingArgs();
        FileInputFormat.setInputPaths(job, new Path(args[0]));

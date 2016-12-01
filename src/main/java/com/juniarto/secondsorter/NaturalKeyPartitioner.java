@@ -16,7 +16,9 @@ import org.apache.hadoop.io.TextDsi;
 public class NaturalKeyPartitioner extends Partitioner<TextDsi, IntWritable> {
     public int getPartition(org.apache.hadoop.io.TextDsi key, IntWritable val, int numPartitions){
         int hash = key.getKey().hashCode();
-        int partition = hash % numPartitions;
+        //int partition = hash % numPartitions;
+        //return (key.hashCode() & Integer.MAX_VALUE) % numPartitions;
+        int partition = (hash & Integer.MAX_VALUE) % numPartitions;
         return partition;
     }
 }
